@@ -109,3 +109,6 @@ if __name__ == '__main__':
         cv.putText(img, label, (20, 40), FONT_FACE, FONT_SCALE,  (0, 0, 255), THICKNESS, cv.LINE_AA)
         cv.imshow('Output', img)
         if cv.waitKey(0) == ord('x'):
+            break
+    cv.destroyAllWindows()
+    cap.release()
