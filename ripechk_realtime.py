@@ -86,22 +86,25 @@ def post_process(input_image, outputs):
       return input_image
 
 if __name__ == '__main__':
-      # Load class names.
-      classes = ["riped tomato", "unriped tomato", "diseased"]
-      frame = cv.imread("test1.jpeg")
-      # Give the weight files to the model and load the network using       them.
-      modelWeights = "best.onnx"
-      net = cv.dnn.readNet(modelWeights)
-      # Process image.
-      detections = pre_process(frame, net)
-      img = post_process(frame.copy(), detections)
-      """
-      Put efficiency information. The function getPerfProfile returns       the overall time for inference(t) 
-      and the timings for each of the layers(in layersTimes).
-      """
-      t, _ = net.getPerfProfile()
-      label = 'Inference time: %.2f ms' % (t * 1000.0 /  cv.getTickFrequency())
-      print(label)
-      cv.putText(img, label, (20, 40), FONT_FACE, FONT_SCALE,  (0, 0, 255), THICKNESS, cv.LINE_AA)
-      cv.imshow('Output', img)
-      cv.waitKey(0)
+    # Load class names.
+    classes = ["riped tomato", "unriped tomato", "diseased"]
+    # Give the weight files to the model and load the network using       them.
+    modelWeights = "best.onnx"
+    net = cv.dnn.readNet(modelWeights)
+    cap = cv.VideoCapture(0)
+    while cap.isOpened():
+    
+        
+        # Process image.
+        detections = pre_process(frame, net)
+        img = post_process(frame.copy(), detections)
+        """
+        Put efficiency information. The function getPerfProfile returns       the overall time for inference(t) 
+        and the timings for each of the layers(in layersTimes).
+        """
+        t, _ = net.getPerfProfile()
+        label = 'Inference time: %.2f ms' % (t * 1000.0 /  cv.getTickFrequency())
+        print(label)
+        cv.putText(img, label, (20, 40), FONT_FACE, FONT_SCALE,  (0, 0, 255), THICKNESS, cv.LINE_AA)
+        cv.imshow('Output', img)
+    cv.waitKey(0)
