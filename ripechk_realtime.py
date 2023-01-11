@@ -92,8 +92,9 @@ if __name__ == '__main__':
     modelWeights = "best.onnx"
     net = cv.dnn.readNet(modelWeights)
     cap = cv.VideoCapture(0)
-    while cap.isOpened():
     
+    while cap.isOpened():
+        _, frame = cap.read()
         
         # Process image.
         detections = pre_process(frame, net)
@@ -107,4 +108,4 @@ if __name__ == '__main__':
         print(label)
         cv.putText(img, label, (20, 40), FONT_FACE, FONT_SCALE,  (0, 0, 255), THICKNESS, cv.LINE_AA)
         cv.imshow('Output', img)
-    cv.waitKey(0)
+        if cv.waitKey(0) == ord('x'):
